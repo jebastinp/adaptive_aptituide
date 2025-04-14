@@ -1,0 +1,46 @@
+<!-- templates/feedback.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Answer Feedback</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-900 text-white flex items-center justify-center min-h-screen">
+  <div class="max-w-2xl mx-auto bg-gray-800 p-8 rounded-2xl shadow-2xl text-center">
+    {% if feedback.outcome == 1 %}
+      <h1 class="text-3xl font-bold text-green-400 mb-4">Correct!</h1>
+    {% else %}
+      <h1 class="text-3xl font-bold text-red-400 mb-4">Incorrect</h1>
+    {% endif %}
+    <p class="mb-2">Your Answer: <span class="font-semibold">{{ feedback.selected_option }}</span></p>
+    <p class="mb-2">Correct Answer: <span class="font-semibold">{{ feedback.correct_answer }}</span></p>
+    <p class="mb-4">Explanation: <span class="italic">{{ feedback.explanation }}</span></p>
+    <p class="mb-4">Rating in <span class="font-semibold">{{ feedback.category }}</span>: {{ feedback.old_rating }} → {{ feedback.new_rating }}</p>
+    
+    <!-- Chatbot Q/A Section -->
+    <div class="mt-8">
+      <h2 class="text-2xl font-semibold">Have a question about this question?</h2>
+      <form method="POST" action="/chat" class="mt-4">
+        <textarea name="query" class="w-full p-2 rounded text-gray-900" placeholder="Type your query here..." required></textarea>
+        <button type="submit" class="mt-4 bg-blue-500 hover:bg-blue-600 px-6 py-3 rounded-xl text-white text-lg">Ask</button>
+      </form>
+      {% if chat_response %}
+      <div class="mt-4 bg-gray-700 p-4 rounded-lg">
+        <h3 class="text-xl font-semibold">Response:</h3>
+        <p>{{ chat_response }}</p>
+      </div>
+      {% endif %}
+    </div>
+
+    <div class="mt-8">
+      {% if next_available %}
+        <a href="{{ url_for('question') }}" class="bg-indigo-500 hover:bg-indigo-600 px-6 py-3 rounded-xl text-white text-lg">Next Question</a>
+      {% else %}
+        <a href="{{ url_for('results') }}" class="bg-purple-600 hover:bg-purple-700 px-6 py-3 rounded-xl text-white text-lg">View Results</a>
+      {% endif %}
+    </div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,31 @@
+<!-- templates/index.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Start Aptitude Test</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-gradient-to-r from-blue-900 to-purple-900 min-h-screen text-white font-sans">
+  <div class="max-w-2xl mx-auto py-20 px-6">
+    <h1 class="text-4xl font-bold mb-8 text-center">Choose 3 Categories</h1>
+    <form method="POST" action="/start_test" class="space-y-6">
+      <div class="grid grid-cols-2 gap-4">
+        {% for cat in categories %}
+        <label class="flex items-center space-x-3">
+          <input type="checkbox" name="categories" value="{{ cat }}" class="form-checkbox h-5 w-5 text-indigo-600">
+          <span>{{ cat }}</span>
+        </label>
+        {% endfor %}
+      </div>
+      <div class="text-center">
+        <button type="submit" class="mt-8 px-6 py-3 bg-indigo-500 hover:bg-indigo-600 text-white rounded-xl text-lg transition-all shadow-md">
+          Start Test
+        </button>
+      </div>
+    </form>
+  </div>
+</body>
+</html>
+

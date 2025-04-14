@@ -1,0 +1,49 @@
+<!-- templates/results.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Test Results</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <!-- Include Chart.js for visualization -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body class="bg-gradient-to-br from-gray-900 via-purple-900 to-black text-white min-h-screen flex flex-col items-center justify-center">
+  <div class="bg-gray-800 p-10 rounded-2xl shadow-2xl max-w-xl text-center">
+    <h1 class="text-4xl font-bold mb-6 text-indigo-400">Test Completed</h1>
+    <h2 class="text-2xl font-semibold mb-4">Ratings per Category</h2>
+    <ul class="mb-6">
+      {% for cat, rating in ratings.items() %}
+      <li class="mb-2">{{ cat }}: <span class="font-bold">{{ rating|round(2) }}</span></li>
+      {% endfor %}
+    </ul>
+    <canvas id="ratingsChart" width="400" height="200"></canvas>
+  </div>
+  <script>
+    const ctx = document.getElementById('ratingsChart').getContext('2d');
+    const ratingsData = {{ ratings|tojson }};
+    const labels = Object.keys(ratingsData);
+    const data = Object.values(ratingsData);
+    new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: labels,
+            datasets: [{
+                label: 'Rating per Category',
+                data: data,
+                backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                borderColor: 'rgba(75, 192, 192, 1)',
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                y: { beginAtZero: true }
+            }
+        }
+    });
+  </script>
+</body>
+</html>
+

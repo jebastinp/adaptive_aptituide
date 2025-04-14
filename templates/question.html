@@ -1,0 +1,34 @@
+<!-- templates/question.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{ phase }} Question</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-900 text-white min-h-screen py-12 px-4">
+  <div class="max-w-3xl mx-auto bg-gray-800 p-8 rounded-2xl shadow-2xl">
+    <h2 class="text-xl font-semibold text-purple-400 mb-4">Phase: {{ phase }}</h2>
+    <p class="mb-2">Question {{ current_question_number }} of {{ total_questions }}</p>
+    <h1 class="text-2xl font-bold mb-6">{{ question.q }}</h1>
+    <form method="POST" action="/submit_answer">
+      <div class="space-y-4">
+        {% for opt in question.options %}
+        <label class="block bg-gray-700 hover:bg-gray-600 transition-all duration-200 p-4 rounded-lg cursor-pointer">
+          <input type="radio" name="option" value="{{ opt }}" class="hidden peer">
+          <span class="peer-checked:text-indigo-400">{{ opt }}</span>
+        </label>
+        {% endfor %}
+      </div>
+      <div class="text-center mt-8">
+        <button type="submit" class="bg-indigo-500 hover:bg-indigo-600 px-8 py-3 rounded-xl shadow-lg text-lg">
+          Submit
+        </button>
+      </div>
+    </form>
+  </div>
+</body>
+</html>
+
+
